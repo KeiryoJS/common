@@ -16,7 +16,8 @@
     "types": "tsc -d",
     "types:bundle": "dts-bundle --name @neocord/common --outputAsModuleFolder --main dist/index.d.ts --out ../index.d.ts --removeSource",
     "lint": "eslint  --ext .ts",
-    "lint:fix": "eslint  --ext .ts --fix"
+    "lint:fix": "eslint  --ext .ts --fix",
+    "test": "nyc ava"
   },
   "engines": {
     "node": ">=14"
@@ -26,7 +27,10 @@
     "@types/node": "^14.14.33",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
+    "ava": "^3.15.0",
     "eslint": "^7.21.0",
+    "nyc": "^15.1.0",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
