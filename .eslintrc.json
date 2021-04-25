@@ -2,10 +2,11 @@
   "extends": "@neocord",
   "root": true,
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.eslint.json"
   },
   "rules": {
     "camelcase": "off",
-    "@typescript-eslint/no-namespace": "off"
+    "@typescript-eslint/no-namespace": "off",
+    "eol-last": "error"
   }
 }
