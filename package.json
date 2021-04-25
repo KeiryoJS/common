@@ -1,0 +1,32 @@
+{
+  "name": "@neocord/common",
+  "author": "Neocord Team",
+  "version": "1.1.0",
+  "description": "Common classes and functions used within neocord.",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
+  "license": "GPL-3.0-only",
+  "repository": "https://github.com/neo-cord/common",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com/"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc --removeComments",
+    "types": "tsc -d",
+    "types:bundle": "dts-bundle --name @neocord/common --outputAsModuleFolder --main dist/index.d.ts --out ../index.d.ts --removeSource",
+    "lint": "eslint  --ext .ts",
+    "lint:fix": "eslint  --ext .ts --fix"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "devDependencies": {
+    "@neocord/eslint-config": "neo-cord/eslint-config",
+    "@types/node": "^14.14.33",
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "eslint": "^7.21.0",
+    "typescript": "^4.2.3"
+  }
+}
