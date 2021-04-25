@@ -1,20 +1,4 @@
-/*
- * NeoCord
- * Copyright 2021 melike2d
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+import "./prototypes"
 
 export * from "./scheduler";
 export * from "./functions";
@@ -23,5 +7,25 @@ export * from "./Mutex";
 export * from "./Extender";
 export * from "./Snowflake";
 export * from "./Collection";
+export * from "./EventFlow";
 
 export * from "./types";
+
+declare global {
+  interface Array<T> {
+    /**
+     * Whether this array is empty, uses {@link Array#size} to determine the returned value.
+     */
+    isEmpty: boolean
+
+    /**
+     * Removes the first element that matches {@param value}
+     *
+     * @param value The value to remove.
+     *
+     * @returns T or undefined
+     */
+    removeFirst(value: T): T | undefined;
+  }
+}
+
