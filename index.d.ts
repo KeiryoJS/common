@@ -429,7 +429,7 @@ type customEvents = {
   "flow.warn": [ message: string ];
 };
 export type SubscriptionMethod<A extends any[] = any[]> = (...args: A) => void;
-export type SubscriptionMap<T extends Record<event, SubscriptionMethod> = empty> = T & customEvents;
+export type SubscriptionMap<T extends Record<event, any[]> = empty> = T & customEvents;
 
 export type Tuple<A = any, B = any> = [ A, B ];
 export type Dictionary<V = any, K extends PropertyKey = string> = Record<K, V>;
