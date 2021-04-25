@@ -12,5 +12,5 @@ yarn add @neocord/commons
 
 ---
 
-neocord team &copy; 2020 - 2021  
-[licensed](/LICENSE) under GPL-3.0
+Copyright 2020 - 2021 &copy; neocord team  
+[licensed](/LICENSE) under Apache 2.0
