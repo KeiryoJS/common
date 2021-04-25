@@ -1,5 +1,5 @@
 export type Tuple<A = any, B = any> = [ A, B ];
-export type Dictionary<V = any, K extends PropertyKey = string> = Record<K, V>;
+export type Dictionary<V = any, K extends PropertyKey = string> = Record<K, V>
 
 export type Class<T = any> = {
   new(...args: any[]): T

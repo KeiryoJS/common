@@ -7,23 +7,21 @@ export class Collection<K, V> extends Map<K, V> {
   public ["constructor"]: typeof Collection;
 
   /**
-   * Creates a collection from an array of values and the keys are the indexes.
-   *
-   * @param {Array} values The array of values.
-   * @returns {Collection}
-   */
-  public static from<V>(values: V[]): Collection<number, V>;
-
-  /**
    *
    * Creates a collection from an array of tuples or object.
    *
    * @param {Tuple[] | Dictionary} tupleArrayOrObject The tuple array or dictionary.
    * @returns {Collection}
    */
-  public static from<K, V>(
-    tupleArrayOrObject: Tuple<K, V>[] | Dictionary<V>
-  ): Collection<K, V>;
+  public static from<K, V>(tupleArrayOrObject: Dictionary<V> | Tuple<K, V>[]): Collection<K, V>;
+
+  /**
+   * Creates a collection from an array of values and the keys are the indexes.
+   *
+   * @param {Array} values The array of values.
+   * @returns {Collection}
+   */
+  public static from<V>(values: V[]): Collection<number, V>;
 
   /**
    * Creates a collection from the provided value.
@@ -61,14 +59,14 @@ export class Collection<K, V> extends Map<K, V> {
   }
 
   /**
-   * Returns the first key in this collection.
+   * Returns the first entry in this collection.
    *
    * @returns {?any}
    */
   public first(): Tuple<K, V> | null;
 
   /**
-   * Returns an array of keys at the start of this collection.
+   * Returns an array of entries at the start of this collection.
    *
    * @param {number} amount The amount of values.
    * @returns {any[]}
@@ -76,7 +74,7 @@ export class Collection<K, V> extends Map<K, V> {
   public first(amount: number): Tuple<K, V>[];
 
   /**
-   * The first key(s) in this collection.
+   * The first entries in this collection.
    *
    * @returns {any}
    */
@@ -95,7 +93,7 @@ export class Collection<K, V> extends Map<K, V> {
   }
 
   /**
-   * Returns the last key in this collection.
+   * Returns the last entry in this collection.
    *
    * @returns {?any}
    */
@@ -103,21 +101,21 @@ export class Collection<K, V> extends Map<K, V> {
 
   /**
    *
-   * Returns an array of keys at the end of this collection.
-   * @param {number} amount The amount of values.
+   * Returns an array of entries at the end of this collection.
+   * @param {number} amount The amount of entries.
    * @returns {any[]}
    */
   public last(amount: number): Tuple<K, V>[];
 
   /**
-   * The last key(s) in this collection.
+   * The last entries in this collection.
    *
    * @returns {any | any[]}
    */
   public last(amount?: number): Tuple<K, V> | Tuple<K, V>[] | null {
     const arr = Array.from(this.entries());
     if (amount) {
-      return amount < 0 ? this.first(amount * -1) : arr.slice(-amount);
+      return amount < 0 ? this.first(amount * -1) : arr.slice(-amount).reverse();
     }
 
     return arr[arr.length - 1] ?? null;
