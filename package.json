@@ -1,11 +1,11 @@
 {
   "name": "@neocord/common",
   "author": "Neocord Team",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Common classes and functions used within neocord.",
   "main": "dist/index.js",
   "types": "index.d.ts",
-  "license": "GPL-3.0-only",
+  "license": "Apache-2.0",
   "repository": "https://github.com/neo-cord/common",
   "publishConfig": {
     "access": "public",
@@ -15,7 +15,8 @@
     "!**/*.test.*",
     "dist/",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc --removeComments",
