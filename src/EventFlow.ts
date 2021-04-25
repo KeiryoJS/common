@@ -121,7 +121,11 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
 
     /* remove the func and save our changes. */
     const removed = !!subscriptions.removeFirst(func);
-    this[SUBSCRIPTIONS].set(event as event, subscriptions);
+    if (subscriptions.isEmpty) {
+      this[SUBSCRIPTIONS].delete(event as event)
+    } else {
+      this[SUBSCRIPTIONS].set(event as event, subscriptions);
+    }
 
     /* return whether the func was removed */
     return removed;
