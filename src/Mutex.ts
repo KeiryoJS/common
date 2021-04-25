@@ -33,7 +33,7 @@ export class Mutex {
     return prom;
   }
 
-  cancel() {
+  cancel(): void {
     while (this.#_queue) {
       const entry = this.#_queue.shift();
       if (!entry) {

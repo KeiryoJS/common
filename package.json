@@ -11,26 +11,50 @@
     "access": "public",
     "registry": "https://registry.npmjs.com/"
   },
+  "files": [
+    "!**/*.test.*",
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "rm -rf dist && tsc --removeComments",
     "types": "tsc -d",
     "types:bundle": "dts-bundle --name @neocord/common --outputAsModuleFolder --main dist/index.d.ts --out ../index.d.ts --removeSource",
-    "lint": "eslint  --ext .ts",
-    "lint:fix": "eslint  --ext .ts --fix",
-    "test": "nyc ava"
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "yarn lint --fix",
+    "test": "nyc --silent ava",
+    "cov": "nyc report --reporter=lcov && codecov",
+    "cov:check": "nyc report && nyc check-coverage"
   },
   "engines": {
     "node": ">=14"
   },
   "devDependencies": {
+    "@ava/typescript": "^1.1.1",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@neocord/eslint-config": "neo-cord/eslint-config",
     "@types/node": "^14.14.33",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "ava": "^3.15.0",
+    "codecov": "^3.8.1",
     "eslint": "^7.21.0",
     "nyc": "^15.1.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
+  },
+  "ava": {
+    "typescript": {
+      "rewritePaths": {
+        "src/": "dist/"
+      }
+    }
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "exclude": [
+      "**/*.spec.js"
+    ]
   }
 }

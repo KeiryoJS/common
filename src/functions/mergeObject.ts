@@ -25,6 +25,8 @@ export function mergeObject<O extends Record<PropertyKey, any> = Record<Property
           cur = _new;
         } else if (Array.isArray(cur)) {
           cur = cur.concat(def);
+        } else if (cur == undefined) {
+          cur = def;
         }
 
         Reflect.set(o, key, cur);

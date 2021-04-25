@@ -1,4 +1,4 @@
-import "./prototypes"
+import "./prototypes";
 
 export * from "./scheduler";
 export * from "./functions";

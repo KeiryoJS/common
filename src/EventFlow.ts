@@ -45,7 +45,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
   set subscriptionLimit(newLimit: number) {
     if (newLimit === -1) {
       /* warn about the unlimited subscription limit */
-      this.send("flow.warn", "Setting subscription limit to -1, memory leaks may pop up.")
+      this.send("flow.warn", "Setting subscription limit to -1, memory leaks may pop up.");
     }
 
     this[SUBSCRIPTIONS_LIMIT] = newLimit;
@@ -122,7 +122,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
     /* remove the func and save our changes. */
     const removed = !!subscriptions.removeFirst(func);
     if (subscriptions.isEmpty) {
-      this[SUBSCRIPTIONS].delete(event as event)
+      this[SUBSCRIPTIONS].delete(event as event);
     } else {
       this[SUBSCRIPTIONS].set(event as event, subscriptions);
     }
@@ -163,7 +163,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
   }
 
   removeListener<E extends keyof M>(event: E, listener: SubscriptionMethod<M[E]>): any {
-    this.unsubscribe(event, listener)
+    this.unsubscribe(event, listener);
     return this;
   }
 

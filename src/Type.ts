@@ -74,9 +74,8 @@ export class Type {
    * @param {any} value The value to get the type name of.
    * @returns {string}
    */
-  public static resolve(value: any): string {
-    const type = typeof value;
-    switch (type) {
+  public static resolve(value: unknown): string {
+    switch (typeof value) {
       case "object":
         return value === null
           ? "null"
@@ -86,7 +85,7 @@ export class Type {
       case "undefined":
         return "void";
       default:
-        return type;
+        return typeof value;
     }
   }
 
@@ -118,7 +117,9 @@ export class Type {
    */
   private isCircular(): boolean {
     for (const parent of this.parents()) {
-      if (parent?.value === this.value) return true;
+      if (parent?.value === this.value) {
+        return true;
+      }
     }
 
     return false;
@@ -164,9 +165,13 @@ export class Type {
     } else if (promise && promise[0]) {
       this.addValue(promise[1]);
     } else if (this.value instanceof Map) {
-      for (const entry of this.value) this.addEntry(entry);
+      for (const entry of this.value) {
+        this.addEntry(entry);
+      }
     } else if (Array.isArray(this.value) || this.value instanceof Set) {
-      for (const value of this.value) this.addValue(value);
+      for (const value of this.value) {
+        this.addValue(value);
+      }
     } else if (this.is === "Object") {
       this.is = "any";
     }

@@ -1,5 +1,5 @@
 import defaultTest, { TestInterface } from "ava";
-import { EventFlow, SubscriptionLimitReached } from "../src";
+import { EventFlow, SubscriptionLimitReached } from "./index";
 
 const test = defaultTest as TestInterface<EventFlow>;
 
@@ -29,21 +29,21 @@ test("EventFlow#subscriptionLimit: warns about unlimited subscriptions", t => {
 });
 
 test("EventFlow#getSubscriptions: returns all subscriptions for the supplied event", t => {
-  t.context.subscribe(testEvent, testSubscription)
-  t.context.subscribe(testEvent, testSubscription)
-  t.context.subscribe(testEvent, testSubscription)
+  t.context.subscribe(testEvent, testSubscription);
+  t.context.subscribe(testEvent, testSubscription);
+  t.context.subscribe(testEvent, testSubscription);
 
-  const subscriptions = t.context.getSubscriptions(testEvent)
-  t.deepEqual(subscriptions, [ testSubscription, testSubscription, testSubscription ])
-})
+  const subscriptions = t.context.getSubscriptions(testEvent);
+  t.deepEqual(subscriptions, [ testSubscription, testSubscription, testSubscription ]);
+});
 
 test("EventFlow#getSubscriptionsCount: returns the total number of subscriptions for the supplied event", t => {
-  t.context.subscribe(testEvent, testSubscription)
-  t.context.subscribe(testEvent, testSubscription)
-  t.context.subscribe(testEvent, testSubscription)
+  t.context.subscribe(testEvent, testSubscription);
+  t.context.subscribe(testEvent, testSubscription);
+  t.context.subscribe(testEvent, testSubscription);
 
-  t.is(t.context.getSubscriptionCount(testEvent), 3)
-})
+  t.is(t.context.getSubscriptionCount(testEvent), 3);
+});
 
 //</editor-fold>
 
@@ -117,9 +117,9 @@ test("EventFlow#send: throws error if subscription fails", t => {
 test("EventFlow#unsubscribe: returns false if no subscriptions exist", t => {
 
   const removed = t.context.unsubscribe(testEvent, testSubscription);
-  t.is(removed, false)
+  t.is(removed, false);
 
-})
+});
 
 test("EventFlow#unsubscribe removes the subscription", t => {
 
@@ -137,8 +137,8 @@ test("EventFlow#unsubscribe: event subscriptions get updated", t => {
   t.context.subscribe(testEvent, testSubscription);
 
   t.context.unsubscribe(testEvent, testSubscription);
-  t.is(t.context.getSubscriptionCount(testEvent), 1)
+  t.is(t.context.getSubscriptionCount(testEvent), 1);
 
-})
+});
 
 //</editor-fold>

@@ -1,5 +1,5 @@
 import defaultTest, { TestInterface } from "ava";
-import { Collection } from "../src";
+import { Collection } from "./index";
 
 /* things we need */
 const test = defaultTest as TestInterface<Collection<any, any>>;
@@ -11,28 +11,28 @@ test.beforeEach(t => {
 //<editor-fold desc="Collection">
 
 test("Collection#array(): returns an array of values", t => {
-  t.context.set("foo", "hello")
-  t.context.set("bar", "world")
+  t.context.set("foo", "hello");
+  t.context.set("bar", "world");
 
-  const values = t.context.array()
-  t.deepEqual(values, [ "hello", "world" ])
-})
+  const values = t.context.array();
+  t.deepEqual(values, [ "hello", "world" ]);
+});
 
 test("Collection#some(predicate, thisArg): returns the correct values", t => {
-  t.context.set("foo", "hello")
-  t.context.set("bar", "world")
+  t.context.set("foo", "hello");
+  t.context.set("bar", "world");
 
   function predicateA(this: { x: number }, c: string) {
-    return c === "hello" && this.x === 3
+    return c === "hello" && this.x === 3;
   }
 
   function predicateB(this: { x: number }, c: string) {
-    return c === "foo" && this.x === 3
+    return c === "foo" && this.x === 3;
   }
 
-  t.truthy(t.context.some(predicateA, { x: 3 }))
-  t.falsy(t.context.some(predicateB, { x: 6 }))
-})
+  t.truthy(t.context.some(predicateA, { x: 3 }));
+  t.falsy(t.context.some(predicateB, { x: 6 }));
+});
 
 //</editor-fold>
 
@@ -68,11 +68,11 @@ test("Collection.from([ [] ]): tuple values map correctly", t => {
 test("Collection.from(3): non array/object value throws an error", t => {
   const create = () => {
     // @ts-expect-error
-    Collection.from(3)
-  }
+    Collection.from(3);
+  };
 
-  t.throws(create)
-})
+  t.throws(create);
+});
 
 //</editor-fold>
 
