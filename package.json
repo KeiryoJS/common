@@ -8,8 +8,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/neo-cord/common",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.com/"
+    "access": "public"
   },
   "files": [
     "!**/*.test.*",
