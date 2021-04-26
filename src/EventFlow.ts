@@ -45,7 +45,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
   set subscriptionLimit(newLimit: number) {
     if (newLimit === -1) {
       /* warn about the unlimited subscription limit */
-      this.send("flow.warn", "Setting subscription limit to -1, memory leaks may pop up.");
+      this.publish("flow.warn", "Setting subscription limit to -1, memory leaks may pop up.");
     }
 
     this[SUBSCRIPTIONS_LIMIT] = newLimit;
@@ -59,7 +59,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
    *
    * @returns {[ number, number ]}, where idx 0 is the number of successful sends and idx 1 is the total number of sends; successful or not.
    */
-  send<E extends keyof M>(event: E, ...args: M[E]): [ sent: number, total: number ] {
+  publish<E extends keyof M>(event: E, ...args: M[E]): [ sent: number, total: number ] {
     const subscriptions = this.getSubscriptions(event);
     if (subscriptions.isEmpty) {
       return [ 0, 0 ];
@@ -75,7 +75,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
           throw e;
         }
 
-        this.send("flow.error", e, event as event, args);
+        this.publish("flow.error", e, event as event, args);
       }
     }
 
@@ -154,7 +154,7 @@ export class EventFlow<M extends SubscriptionMap = empty> implements EventEmitte
   /* ↓ ↓ ↓ compat methods ↓ ↓ ↓ */
 
   emit<E extends keyof M>(event: E, ...args: M[E]): boolean {
-    return !!this.send(event, ...args)[0];
+    return !!this.publish(event, ...args)[0];
   }
 
   addListener<E extends keyof M>(event: E, listener: SubscriptionMethod<M[E]>): any {

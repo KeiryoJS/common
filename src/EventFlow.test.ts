@@ -86,14 +86,14 @@ test("EventFlow#send: returns the correct number of successful and total sends",
   t.context.subscribe("flow.error", () => {
   });  // we dont care about the error.
 
-  const [ successful, total ] = t.context.send(testEvent);
+  const [ successful, total ] = t.context.publish(testEvent);
   t.is(successful, 1);
   t.is(total, 2);
 
 });
 
 test("EventFlow#send: returns [0, 0] if no subscriptions exist", t => {
-  const tuple = t.context.send(testEvent);
+  const tuple = t.context.publish(testEvent);
   t.deepEqual(tuple, [ 0, 0 ]);
 });
 
@@ -102,12 +102,12 @@ test("EventFlow#send: sends error event if subscription fails", t => {
 
   t.context.subscribe("flow.error", e => t.truthy(e instanceof Error));
   t.context.subscribe(testEvent, testSubscriptionThrowing);
-  t.context.send(testEvent);
+  t.context.publish(testEvent);
 });
 
 test("EventFlow#send: throws error if subscription fails", t => {
   t.context.subscribe(testEvent, testSubscriptionThrowing);
-  t.throws(() => t.context.send(testEvent));
+  t.throws(() => t.context.publish(testEvent));
 });
 
 //</editor-fold>
