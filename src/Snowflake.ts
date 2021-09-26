@@ -1,102 +1,47 @@
-const EPOCH = 1420070400000;
-let INCREMENT = 0;
+const EPOCH = 1420070400000n;
+let INCREMENT = 0n;
 
 export class Snowflake {
-  /**
-   * Transforms an ID into binary.
-   *
-   * @param snowflake The ID to transform.
-   */
-  static toBinary(snowflake: snowflake): string {
-    let binary = "",
-      high = parseInt(snowflake.slice(0, -10)) || 0,
-      low = parseInt(snowflake.slice(-10)) || 0;
-
-    while (low > 0 || high > 0) {
-      binary = String(low & 1) + binary;
-      low = Math.floor(low / 2);
-      if (high > 0) {
-        low += 5000000000 * (high % 2);
-        high = Math.floor(high / 2);
-      }
+    /**
+     * Deconstructs a Discord Snowflake.
+     *
+     * @param snowflake The snowflake to deconstruct.
+     * @param epoch The epoch to use when deconstructing.
+     */
+    static deconstruct(snowflake: snowflake, epoch = EPOCH): DeconstructedSnowflake {
+        const id = BigInt(snowflake);
+        return {
+            timestamp: (id >> 22n) + epoch,
+            workerId: (id & 0x3e0000n) >> 17n,
+            processId: (id & 0x1f000n) >> 12n,
+            increment: id & 0xfffn,
+            id: snowflake
+        };
     }
 
-    return binary.trim();
-  }
+    /**
+     * Generates a new snowflake.
+     *
+     * @param options The options to use when generating a snowflake.
+     */
+    static generate(options: GenerateSnowflakeOptions = {}): snowflake {
+        if (INCREMENT >= 4095n) {
+            INCREMENT = 0n;
+        }
 
-  /**
-   * Transforms an ID from binary to a decimal string.
-   *
-   * @param binary The binary string to be transformed.
-   */
-  static fromBinary(binary: string): snowflake {
-    let decimal = "";
+        options.epoch = options.epoch ? BigInt(options.epoch) : EPOCH;
+        options.timestamp = BigInt(options.timestamp ?? Date.now());
+        options.processId = options.processId ? BigInt(options.processId) : 0n;
+        options.workerId = options.workerId ? BigInt(options.workerId) : 0n;
+        options.sequence = options.sequence ? BigInt(options.sequence) : INCREMENT++;
 
-    while (binary.length > 50) {
-      const high = parseInt(binary.slice(0, -32), 2),
-        low = parseInt((high % 20).toString(2) + binary.slice(-32), 2);
+        const timestamp = ((options.timestamp - options.epoch) % 4398046511104n) << 22n
+            , worker = (options.processId & (-1n ^ (-1n << 5n))) << 17n
+            , process = (options.workerId & (-1n ^ (-1n << 5n))) << 12n
+            , sequence = (options.sequence & (-1n ^ (-1n << 12n))) << 0n;
 
-      decimal = (low % 10).toString() + decimal;
-      binary =
-        Math.floor(high / 10).toString(2) +
-        Math.floor(low / 10)
-          .toString(2)
-          .padStart(32, "0");
+        return String(timestamp | worker | process | sequence);
     }
-
-    let bin = parseInt(binary, 2);
-    while (bin > 0) {
-      decimal = (bin % 10).toString() + decimal;
-      bin = Math.floor(bin / 10);
-    }
-
-    return decimal.trim();
-  }
-
-  /**
-   * Deconstructs a Discord Snowflake.
-   *
-   * @param snowflake The snowflake to deconstruct.
-   * @param epoch The epoch to use when deconstructing.
-   */
-  static deconstruct(snowflake: snowflake, epoch = EPOCH): DeconstructedSnowflake {
-    const binary = Snowflake.toBinary(snowflake).padStart(64, "0");
-
-    return {
-      timestamp: parseInt(binary.substring(0, 42), 2) + epoch,
-      workerId: parseInt(binary.substring(42, 47), 2),
-      processId: parseInt(binary.substring(47, 52), 2),
-      increment: parseInt(binary.substring(52, 64), 2),
-      binary
-    };
-  }
-
-  /**
-   * Generates a new snowflake.
-   *
-   * @param options The options to use when generating a snowflake.
-   */
-  static generate({ epoch = EPOCH, timestamp = Date.now() }: GenerateSnowflakeOptions = {}): snowflake {
-    if (epoch instanceof Date) {
-      epoch = epoch.getTime();
-    }
-
-    if (timestamp instanceof Date) {
-      timestamp = timestamp.getTime();
-    }
-
-    if (INCREMENT >= 4095) {
-      INCREMENT = 0;
-    }
-
-    const binary = `${(timestamp - epoch)
-      .toString(2)
-      .padStart(42, "0")}0000100000${(++INCREMENT)
-      .toString(2)
-      .padStart(12, "0")}`;
-
-    return Snowflake.fromBinary(binary.trim());
-  }
 }
 
 /**
@@ -113,14 +58,17 @@ export class Snowflake {
 export type snowflake = string;
 
 export interface GenerateSnowflakeOptions {
-  timestamp?: Date | number;
-  epoch?: Date | number;
+    timestamp?: number | bigint;
+    epoch?: number | bigint;
+    workerId?: number | bigint;
+    processId?: number | bigint;
+    sequence?: number | bigint;
 }
 
 export interface DeconstructedSnowflake {
-  binary: string;
-  timestamp: number;
-  workerId: number;
-  processId: number;
-  increment: number;
+    id: snowflake;
+    timestamp: bigint;
+    workerId: bigint;
+    processId: bigint;
+    increment: bigint;
 }

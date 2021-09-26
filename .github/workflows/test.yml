@@ -1,33 +1,33 @@
 name: Test
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    paths-ignore:
-      - "*.md"
+    push:
+        branches:
+            - main
+    pull_request:
+        paths-ignore:
+            - "*.md"
 
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout Repository
+                uses: actions/checkout@v2
 
-      - name: Install NodeJS v14
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
+            -   name: Install NodeJS v14
+                uses: actions/setup-node@v1
+                with:
+                    node-version: 14
 
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+            -   name: Install Dependencies
+                run: yarn install --frozen-lockfile
 
-      - name: Build Project
-        run: yarn build
+            -   name: Build Project
+                run: yarn build
 
-      - name: Run Tests
-        run: yarn test
+            -   name: Run Tests
+                run: yarn test
 
-      - name: Coverage
-        run: yarn cov
+            -   name: Coverage
+                run: yarn cov

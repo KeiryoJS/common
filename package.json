@@ -1,60 +1,51 @@
 {
-  "name": "@neocord/common",
-  "author": "Neocord Team",
-  "version": "1.1.3",
-  "description": "Common classes and functions used within neocord.",
-  "main": "dist/index.js",
-  "types": "index.d.ts",
-  "license": "Apache-2.0",
-  "repository": "https://github.com/neo-cord/common",
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "!**/*.test.*",
-    "dist/",
-    "LICENSE",
-    "README.md",
-    "index.d.ts"
-  ],
-  "scripts": {
-    "build": "rm -rf dist && tsc --removeComments",
-    "types": "tsc -d",
-    "types:bundle": "dts-bundle --name @neocord/common --outputAsModuleFolder --main dist/index.d.ts --out ../index.d.ts --removeSource",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "yarn lint --fix",
-    "test": "nyc --silent ava",
-    "cov": "nyc report --reporter=lcov && codecov",
-    "cov:check": "nyc report && nyc check-coverage"
-  },
-  "engines": {
-    "node": ">=14"
-  },
-  "devDependencies": {
-    "@ava/typescript": "^1.1.1",
-    "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@neocord/eslint-config": "neo-cord/eslint-config",
-    "@types/node": "^14.14.33",
-    "@typescript-eslint/eslint-plugin": "^4.17.0",
-    "@typescript-eslint/parser": "^4.17.0",
-    "ava": "^3.15.0",
-    "codecov": "^3.8.1",
-    "eslint": "^7.21.0",
-    "nyc": "^15.1.0",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.3"
-  },
-  "ava": {
-    "typescript": {
-      "rewritePaths": {
-        "src/": "dist/"
-      }
+    "name": "@keiryo/common",
+    "author": "Keiryo Team",
+    "version": "1.0.0",
+    "description": "Common classes and functions used within keiryo.",
+    "main": "dist/index.js",
+    "types": "index.d.ts",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/KeiryoJS/common",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "!**/*.test.*",
+        "dist/",
+        "LICENSE",
+        "README.md",
+        "index.d.ts"
+    ],
+    "scripts": {
+        "build": "rm -rf dist && tsc",
+        "types": "yarn build -d",
+        "types:bundle": "dts-bundle --name @keiryo/common --outputAsModuleFolder --main dist/index.d.ts --out ../index.d.ts --removeSource",
+        "lint": "eslint src --ext .ts",
+        "lint:fix": "yarn lint --fix",
+        "test": "nyc --silent ava",
+        "cov": "nyc report --reporter=lcov && codecov",
+        "cov:check": "nyc report && nyc check-coverage",
+        "prepublishOnly": "yarn types && yarn types:bundle && yarn build"
+    },
+    "engines": {
+        "node": ">=14"
+    },
+    "devDependencies": {
+        "@ava/typescript": "^2.0.0",
+        "@istanbuljs/nyc-config-typescript": "^1.0.1",
+        "@keiryo/eslint-config": "^1.0.1",
+        "@types/node": "^16.9.6",
+        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/parser": "^4.31.2",
+        "ava": "^3.15.0",
+        "codecov": "^3.8.3",
+        "eslint": "^7.32.0",
+        "nyc": "^15.1.0",
+        "ts-node": "^10.2.1",
+        "typescript": "^4.4.3"
+    },
+    "dependencies": {
+        "tiny-typed-emitter": "^2.1.0"
     }
-  },
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "exclude": [
-      "**/*.spec.js"
-    ]
-  }
 }

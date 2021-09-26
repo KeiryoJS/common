@@ -1,12 +1,12 @@
 {
-  "extends": "@neocord",
-  "root": true,
-  "parserOptions": {
-    "project": "./tsconfig.eslint.json"
-  },
-  "rules": {
-    "camelcase": "off",
-    "@typescript-eslint/no-namespace": "off",
-    "eol-last": "error"
-  }
+    "extends": "@keiryo",
+    "root": true,
+    "parserOptions": {
+        "project": "./tsconfig.eslint.json"
+    },
+    "rules": {
+        "camelcase": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "eol-last": "error"
+    }
 }

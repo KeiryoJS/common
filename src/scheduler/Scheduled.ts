@@ -3,71 +3,69 @@ import { Timeout } from "./Timeout";
 
 import type { Task } from "./TaskScheduler";
 
-export namespace Scheduled {
-  /**
-   * All scheduled intervals.
-   */
-  export const INTERVALS = new Set<NodeJS.Timeout>();
+/**
+ * All scheduled intervals.
+ */
+export const INTERVALS = new Set<NodeJS.Timeout>();
 
-  /**
-   * All scheduled timeouts.
-   */
-  export const TIMEOUTS = new Set<NodeJS.Timeout>();
+/**
+ * All scheduled timeouts.
+ */
+export const TIMEOUTS = new Set<NodeJS.Timeout>();
 
-  /**
-   * Disposes of all intervals in {@link INTERVALS}
-   *
-   * @returns {number}
-   */
-  export function clearIntervals(): number {
+/**
+ * Disposes of all intervals in {@link INTERVALS}
+ *
+ * @returns {number}
+ */
+export function clearIntervals(): number {
     if (!INTERVALS.size) {
-      return 0;
+        return 0;
     }
 
     let disposedOf = 0;
     for (const interval of INTERVALS) {
-      INTERVALS.delete(interval);
-      clearInterval(interval);
-      disposedOf++;
+        INTERVALS.delete(interval);
+        clearInterval(interval);
+        disposedOf++;
     }
 
     return disposedOf;
-  }
+}
 
-  /**
-   * Disposes of each scheduled timeout in {@link TIMEOUTS}.
-   *
-   * @returns {number} The number of intervals that were disposed of.
-   */
-  export function clearTimeouts(): number {
+/**
+ * Disposes of each scheduled timeout in {@link TIMEOUTS}.
+ *
+ * @returns {number} The number of intervals that were disposed of.
+ */
+export function clearTimeouts(): number {
     if (!TIMEOUTS.size) {
-      return 0;
+        return 0;
     }
 
     let disposedOf = 0;
     for (const timeout of TIMEOUTS) {
-      TIMEOUTS.delete(timeout);
-      clearTimeout(timeout);
-      disposedOf++;
+        TIMEOUTS.delete(timeout);
+        clearTimeout(timeout);
+        disposedOf++;
     }
 
     return disposedOf;
-  }
+}
 
-  /**
-   * Disposes of all timeouts and intervals
-   *
-   * @see TIMEOUTS
-   * @see INTERVALS
-   *
-   * @returns {Array} where index 0 is the number of cleared timeouts and index 1 is the number of cleared intervals.
-   */
-  export function clear(): [ timeouts: number, intervals: number ] {
+/**
+ * Disposes of all timeouts and intervals
+ *
+ * @see TIMEOUTS
+ * @see INTERVALS
+ *
+ * @returns {Array} where index 0 is the number of cleared timeouts and index 1 is the number of cleared intervals.
+ */
+export function clearScheduled(): [ timeouts: number, intervals: number ] {
     const timeouts = clearTimeouts(),
-      intervals = clearIntervals();
+        intervals = clearIntervals();
 
     return [ timeouts, intervals ];
-  }
 }
 
 /**
@@ -78,7 +76,7 @@ export namespace Scheduled {
  * @param args Arguments to pass
  */
 export function createInterval(delay: number, block: Task, ...args: any[]): Interval {
-  return new Interval(block).start(delay, ...args);
+    return new Interval(block).start(delay, ...args);
 }
 
 /**
@@ -89,5 +87,5 @@ export function createInterval(delay: number, block: Task, ...args: any[]): Inte
  * @param args Arguments to pass.
  */
 export function createTimeout(delay: number, block: Task, ...args: any[]): Timeout {
-  return new Timeout(block).start(delay, ...args);
+    return new Timeout(block).start(delay, ...args);
 }
