@@ -32,7 +32,7 @@
         "node": ">=14"
     },
     "devDependencies": {
-        "@ava/typescript": "^2.0.0",
+        "@ava/typescript": "^3.0.0",
         "@istanbuljs/nyc-config-typescript": "^1.0.1",
         "@keiryo/eslint-config": "^1.0.1",
         "@types/node": "^16.9.6",
